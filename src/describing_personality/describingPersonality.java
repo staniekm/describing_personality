@@ -5,63 +5,72 @@ import javax.swing.JOptionPane;
 public class DescribingPersonality {
 	public static void main(String[] args) {
 
-	String dialogTitle = "Describing Personality";
-	String firstName = JOptionPane.showInputDialog(null, "Name", dialogTitle, JOptionPane.PLAIN_MESSAGE);
-	String lastName = JOptionPane.showInputDialog(null, "Lastname", dialogTitle, JOptionPane.PLAIN_MESSAGE);
-	String nickname = JOptionPane.showInputDialog(null, "Nickname", dialogTitle, JOptionPane.PLAIN_MESSAGE);
-	String dateOfBirthday = JOptionPane.showInputDialog(null, "Birthday", dialogTitle, JOptionPane.PLAIN_MESSAGE);
-
-	String personality = firstName + lastName; //creating full name lastname string
-	personality = descriptions(descriptionNumber(personality.toLowerCase()));//getting descriptions
-
-	String perceivedPersonality = descriptions(descriptionNumber(nickname.toLowerCase()));
+		//test();
 	
-	String destiny = descriptions(sumOfDigits(Integer.parseInt(dateOfBirthday)));
+		String dialogTitle = "Describing Personality";
+		
+		String firstName = getStringDialog("Name", dialogTitle);
+		String lastName = getStringDialog("Last Name", dialogTitle);
+		String nickname = getStringDialog("Nickname", dialogTitle);
+		String dateOfBirthday = getStringDialog("Birthday", dialogTitle);
 	
-	String finalDialog = "Your personality is: " + personality + "\n" +
-			"You're perceived as: " + perceivedPersonality + "\n" +
-			"Your destiny is to be: "+ destiny;
-	
-	JOptionPane.showMessageDialog(null, finalDialog, dialogTitle, JOptionPane.PLAIN_MESSAGE);
-	
-	//test();
-	
-	}
-
-	public static void test () {
-	
-	String nameTest = "Marcin";
-	String lastNameTest = "Staniek";
-	String fullName = nameTest + lastNameTest;
-	String nicknameTest = "Stanik";
-	String dateOfBirthday = "3111997";
-	
-	String personality = descriptions(descriptionNumber(fullName.toLowerCase()));//getting descriptions
-   
-	String perceivedPersonality = descriptions(descriptionNumber(nicknameTest.toLowerCase()));
-	
-	String destiny = descriptions(sumOfDigits(Integer.parseInt(dateOfBirthday)));
-	
-	System.out.println("Testing program...");
-	
-	if(personality == descriptions(1))
-		System.out.println("personality is ok");
-	else
-		System.out.println("personality is not ok");
-
-	if(perceivedPersonality == descriptions(7))
-		System.out.println("perceived personality is ok");
-	else
-		System.out.println("perceived personality is not ok");
-	if(destiny == descriptions(4))
-		System.out.println("destiny is ok");
-	else
-		System.out.println("destiny is not ok");
-	
-	
+		String personality = description(descriptionNumber(addTwoStrings(firstName, lastName).toLowerCase()));//getting descriptions
+		String perceivedPersonality = description(descriptionNumber(nickname.toLowerCase()));
+		String destiny = description(sumOfDigits(Integer.parseInt(dateOfBirthday)));
+		
+		outputDialog(finalDialog(personality, perceivedPersonality, destiny), dialogTitle);		
 	}
 	
-	public static String descriptions(int descriptionNumber) {
+	public static void test() {
+	
+		String nameTest = "Marcin";
+		String lastNameTest = "Staniek";
+		String nicknameTest = "Stanik";
+		String dateOfBirthdayTest = "3111997";
+		
+		System.out.println("Testing program...\n" + "Name: " + nameTest + "\nLast Name: " + lastNameTest + 
+				"\nNickname: " + nicknameTest + "\nBirthday: " + dateOfBirthdayTest);
+		
+		String personality = description(descriptionNumber(addTwoStrings(nameTest, lastNameTest).toLowerCase()));//getting descriptions
+		String perceivedPersonality = description(descriptionNumber(nicknameTest.toLowerCase()));
+		String destiny = description(sumOfDigits(Integer.parseInt(dateOfBirthdayTest)));
+			
+		if(personality == description(1))
+			System.out.println("personality is 1");
+		else
+			System.out.println("personality is not ok");
+	
+		if(perceivedPersonality == description(7))
+			System.out.println("perceived personality is 7");
+		else
+			System.out.println("perceived personality is not ok");
+		if(destiny == description(4))
+			System.out.println("destiny is 4");
+		else
+			System.out.println("destiny is not ok");
+		
+		System.out.println("Descriptions: ");
+		for(int i=1;i<10;i++)//printing all descriptions
+			System.out.println(i + ". " + description(i));
+	}
+
+	public static String getStringDialog(String info, String title) {
+		String string = JOptionPane.showInputDialog(null, info, title, JOptionPane.PLAIN_MESSAGE);
+		return string;
+	}
+	
+	public static void outputDialog(String content, String title) {
+		JOptionPane.showMessageDialog(null, content, title, JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	public static String finalDialog(String personality, String perceivedPersonality, String destiny) {
+		String finalDialog = "You're " + personality + "\n" +
+				"You're perceived as " + perceivedPersonality + "\n" +
+				"Your destiny is to be "+ destiny;
+		return finalDialog;
+	}
+
+	public static String description(int descriptionNumber) {
 		
 		String[] description = new String[9];
 		description[0] = "powerfull, aggresive, self-centered, ambitious, quick-tempered, lonely";
@@ -73,9 +82,7 @@ public class DescribingPersonality {
 		description[6] = "talented, serious, pessimistic, self-controlled, proud, sensitive";
 		description[7] = "tought, efficent, materialistic, energeric, selfish, strong-minded";
 		description[8] = "idealistic, romantic, impulsive, rebelious, determined, insecure";
-		
-		//for(int i=0;i<9;i++) System.out.println(descriptions[i]);// test for printing all descriptions
-		
+				
 		return description[descriptionNumber-1];
 	}
 	
@@ -110,6 +117,11 @@ public class DescribingPersonality {
         sum = (sum <10) ? sum : sumOfDigits(sum);
         return sum;
     }
+	
+	public static String addTwoStrings(String str1, String str2) {
+		String str = str1 + str2;
+		return str;
+	}
 	
 }
 	
